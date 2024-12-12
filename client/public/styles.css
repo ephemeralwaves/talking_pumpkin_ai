@@ -1,0 +1,360 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative; /* Add this line */
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.kal-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px; /* Adjust size as needed */
+    color: #fff; /* White text */
+    background-color: #00bfff; /* Light blue background */
+    padding: 5px 10px; /* Add some padding for better appearance */
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+.number-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px; /* Adjust size as needed */
+    color: #fff; /* White text */
+    /* No background color, will inherit default */
+}
+
+#center-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 2;
+}
+
+#left-screens, #right-screens {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.retro-screen {
+    width: 300px;
+    height: 200px;
+    background: #333;
+    border: 10px solid #999;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.retro-screen::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 20px;
+    background: #666;
+    border-radius: 10px;
+}
+
+.retro-screen iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#hal-animation {
+    position: relative;
+    width: 550px; /* Adjust as needed */
+    height: 550px; /* Adjust as needed */
+    border-radius: 50%; /* Make the element circular */
+    overflow: hidden; /* Ensure content stays within the circle */
+}
+
+#left-eye,
+#right-eye {
+    position: absolute;
+    top: 50px; /* Position above the mouth */
+    width: 0;
+    height: 0;
+    padding-top: 50px;
+    border-left: 40px solid transparent; /* Increase for wider base */
+    border-right: 40px solid transparent; /* Increase for wider base */
+    border-bottom: 80px solid #fff; /* Increase for taller triangle */
+    transition: box-shadow 0.3s; /* Smooth transition for glow effect */
+    z-index: 1; /* Ensure eyes are above the glow */
+}
+
+#left-eye {
+    left: 20%; /* Position left eye */
+}
+
+#right-eye {
+    left: 70%; /* Position right eye */
+}
+
+/* Remove glow effects from triangle eyes */
+#hal-animation.listening #left-eye,
+#hal-animation.listening #right-eye {
+    box-shadow: none; /* No glow on eyes */
+}
+
+#hal-animation.processing #left-eye,
+#hal-animation.processing #right-eye {
+    box-shadow: none; /* No glow on eyes */
+}
+
+#hal-animation.speaking #left-eye,
+#hal-animation.speaking #right-eye {
+    box-shadow: none; /* No glow on eyes */
+}
+
+#hal-animation.wake-word-detected #left-eye,
+#hal-animation.wake-word-detected #right-eye {
+    box-shadow: none; /* No glow on eyes */
+}
+
+/* eye-circle with glow effects */
+.eye-circle {
+    position: absolute;
+    bottom: 320px;
+    width: 90px;
+    height: 70px;
+    background-color: #000;
+    border-radius: 50%;
+    z-index: 10;
+    transition: box-shadow 0.3s;
+}
+
+.eye-circle.left {
+    left: 19%; /* Position for the visible left eye circle */
+}
+
+.eye-circle.right {
+    left: 69%; /* Position for the visible right eye circle */
+}
+
+
+/* Pupils with glow effects */
+.pupil {
+    position: absolute;
+    bottom: 370px; /* Position at the bottom of the triangle */
+    width: 45px; /* Width of the pupil */
+    height: 40px; /* Height of the pupil */
+    background-color: #000; /* Color of the pupil */
+    border-radius: 50%; /* Make it a half-circle */
+    z-index: -10; /* Ensure pupils are above the triangles */
+    transition: box-shadow 0.3s; /* Smooth transition for glow effect */
+}
+
+.pupil.left {
+    left: 23.33%; /* Position for the left eye pupil */
+}
+
+.pupil.right {
+    left: 73.33%; /* Position for the right eye pupil */
+}
+
+/* Glow effects for pupils using box-shadow */
+#hal-animation.listening .pupil {
+    /* box-shadow works like this: the first value; */
+    box-shadow: 0 0 20px rgba(165, 255, 165, 0.9), 0 0 40px rgba(165, 255, 165, 0.9), 0 0 60px rgba(165, 255, 165, 0.9); 
+}
+
+#hal-animation.processing .pupil {
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.9), 0 0 60px rgba(255, 140, 0, 0.9); 
+    animation: pulse 1s infinite;
+}
+
+#hal-animation.speaking .pupil {
+    box-shadow: 0 0 20px rgba(157, 0, 255, 0.9), 0 0 40px rgba(157, 0, 255, 0.9), 0 0 60px rgba(157, 0, 255, 0.9); 
+    animation: pulse 1s infinite;
+}
+
+#hal-animation.wake-word-detected .pupil {
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5), 0 0 40px rgba(255, 255, 0, 0.5), 0 0 60px rgba(255, 255, 0, 0.5); /* Yellow glow */
+}
+
+#buttons {
+    position: absolute; /* Change to absolute positioning */
+    bottom: 10px; /* Position from the bottom */
+    left: 10px; /* Position from the left */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align buttons to the left */
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 60%);
+    transform: rotate(45deg);
+    transition: transform 0.3s;
+}
+
+button:hover::before {
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+button:hover {
+    background-color: #555;
+}
+
+button:active {
+    background-color: #777;
+}
+
+#fullscreen-button {
+    position: absolute;
+    bottom: 9px;
+    right: -20px;
+    margin: 0;
+}
+
+.retro-screen {
+    width: 300px;
+    height: 200px;
+    background: #333;
+    border: 10px solid #999;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.retro-screen::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 20px;
+    background: #666;
+    border-radius: 10px;
+}
+
+#youtube-video-left,
+#youtube-video-right {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#kal-face {
+    position: relative;
+    width: 350px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+/* Nose */
+#kal-nose {
+    position: absolute;
+    top: 200px; /* Adjust position as needed */
+    left: 80%; /* Center horizontally */
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent; /* Left side of the triangle */
+    border-right: 40px solid transparent; /* Right side of the triangle */
+    border-bottom: 40px solid #fff; /* Color of the nose */
+    transform: translateX(-50%); /* Center the nose */
+}
+
+#kal-mouth {
+    position: absolute;
+    bottom: 0;
+    left: 80%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 80px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px 10px 50px 50px;
+    overflow: hidden;
+    transition: height 0.1s ease;
+    opacity: 1;
+}
+
+#kal-mouth::before,
+#kal-mouth::after,
+#kal-mouth .tooth1,
+#kal-mouth .tooth2,
+#kal-mouth .tooth3 {
+    content: '';
+    position: absolute;
+    background-color: #000000; /* Tooth color */
+}
+
+#kal-mouth::before { /* First tooth */
+    top: -25px;
+    left: 10%; /* Adjust position */
+    width: 60px; /* Width of the tooth */
+    height: 50px; /* Height of the tooth */
+}
+
+#kal-mouth .tooth1 { /* Second tooth */
+    top: -25px;
+    left: 70%; /* Adjust position */
+    width: 60px; /* Width of the tooth */
+    height: 50px; /* Height of the tooth */
+}
+
+#kal-mouth .tooth2 { /* Third tooth */
+    bottom: -25px;
+    left: 40%; /* Adjust position */
+    width: 60px; /* Width of the tooth */
+    height: 50px; /* Height of the tooth */
+}
+
+/* Add this @keyframes rule for the pulse animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.5), 0 0 60px rgba(255, 140, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 140, 0, 0.7), 0 0 60px rgba(255, 140, 0, 0.7), 0 0 90px rgba(255, 140, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.5), 0 0 60px rgba(255, 140, 0, 0.5);
+    }
+}
